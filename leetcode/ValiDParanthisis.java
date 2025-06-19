@@ -1,54 +1,49 @@
 package leetcode;
+
 import java.util.Stack;
 
-public class ValiDParanthisis {
-    public boolean isValid(String s) {
-        // Initialize a stack to keep track of opening brackets
-        Stack<Character> stack = new Stack<>();
+class ValidParenthesis {
 
-        // Iterate through each character in the string
-        for (char ch : s.toCharArray()) {
-            // Check if the character is an opening bracket
-            if (ch == '(' || ch == '{' || ch == '[') {
-                stack.push(ch); // Push opening brackets onto the stack
+    public static boolean isValid(String str) {
+
+        Stack<Character> s = new Stack<>();
+        for (int i = 0; i < str.length(); i++) {
+
+            char ch = str.charAt(i);
+
+            // Opening brackets
+            if (ch == '(' || ch == '{' || ch == '[') { // FIX: Changed the last '|| ch == "{"' to '|| ch == "["'
+                s.push(ch);
             } else {
-                // If stack is empty or the top of the stack doesn't match the closing bracket, return false
-                if (stack.isEmpty()) return false;
+                // Closing brackets
+                if (s.isEmpty()) {
+                    return false;
+                }
 
-                char top = stack.pop(); // Pop the top of the stack
-
-                // Check for matching opening bracket
-                if ((ch == ')' && top != '(') ||
-                        (ch == '}' && top != '{') ||
-                        (ch == ']' && top != '[')) {
-                    return false; // Mismatched brackets
+                if ((s.peek() == '(' && ch == ')') ||
+                        (s.peek() == '{' && ch == '}') ||
+                        (s.peek() == '[' && ch == ']')) {
+                    s.pop(); //  s.pop() for valid scenarios so stack gets updated
+                } else {
+                    return false;
                 }
             }
         }
 
-        // At the end, if the stack is empty, all brackets were matched properly
-        return stack.isEmpty();
+
+        if( s.isEmpty())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public static void main(String[] args) {
-        ValiDParanthisis solution = new ValiDParanthisis();
-
-        // Test cases
-        String[] testCases = {
-                "()",
-                "()[]{}",
-                "(]",
-                "([])",
-                "([{}])",
-                "((()))",
-                "{[()]}",
-                "([)]",
-                "((]",
-        };
-
-        // Output results for each test case
-        for (String testCase : testCases) {
-            System.out.println("Input: \"" + testCase + "\" | Output: " + solution.isValid(testCase));
-        }
+//        String str = "[](){}";
+        String str = "({})[]";
+        System.out.println(isValid(str)); // Will print `true` for valid parentheses
     }
 }
