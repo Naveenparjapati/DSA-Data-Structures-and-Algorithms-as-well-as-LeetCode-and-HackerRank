@@ -7,7 +7,9 @@ public class LL {
     private int size;
 
     public LL() {
-        this.size = 0;
+
+        this.size = 0
+        ;
     }
 
     //333333333333333
